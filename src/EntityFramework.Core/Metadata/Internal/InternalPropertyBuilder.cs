@@ -23,10 +23,26 @@ namespace Microsoft.Data.Entity.Metadata.Internal
 
         public virtual bool Required(bool isRequired, ConfigurationSource configurationSource)
         {
-            if (configurationSource.CanSet(_isRequiredConfigurationSource, Metadata.IsNullable.HasValue))
+            if (CanSetRequired(isRequired, configurationSource))
             {
-                _isRequiredConfigurationSource = configurationSource;
+                if (_isRequiredConfigurationSource == null
+                    || configurationSource.Overrides(_isRequiredConfigurationSource.Value))
+                {
+                    _isRequiredConfigurationSource = configurationSource;
+                }
+
                 Metadata.IsNullable = !isRequired;
+                return true;
+            }
+
+            return false;
+        }
+
+        public virtual bool CanSetRequired(bool isRequired, ConfigurationSource configurationSource)
+        {
+            if (configurationSource.CanSet(_isRequiredConfigurationSource, Metadata.IsNullable.HasValue)
+                || Metadata.IsNullable.Value == !isRequired)
+            {
                 return true;
             }
 

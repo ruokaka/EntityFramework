@@ -367,9 +367,9 @@ namespace Microsoft.Data.Entity.Internal
         /// <summary>
         /// The property '{property}' cannot exist on entity type '{entityType}' because the property is not marked as shadow state and the type of the corresponding CLR property does not match the type specified in the property.
         /// </summary>
-        public static string WrongClrPropertyType([CanBeNull] object property, [CanBeNull] object entityType)
+        public static string PropertyWrongClrType([CanBeNull] object property, [CanBeNull] object entityType)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("WrongClrPropertyType", "property", "entityType"), property, entityType);
+            return string.Format(CultureInfo.CurrentCulture, GetString("PropertyWrongClrType", "property", "entityType"), property, entityType);
         }
 
         /// <summary>
@@ -437,19 +437,19 @@ namespace Microsoft.Data.Entity.Internal
         }
 
         /// <summary>
-        /// The navigation property '{navigation}' cannot be added to entity type '{entityType}' because its CLR type '{clrType}' does not match the CLR type '{targetType}' of the related entity.
+        /// The navigation property '{navigation}' cannot be added to entity type '{entityType}' because its CLR type '{clrType}' does not match the expected CLR type '{targetType}'.
         /// </summary>
-        public static string WrongClrSingleNavigationType([CanBeNull] object navigation, [CanBeNull] object entityType, [CanBeNull] object clrType, [CanBeNull] object targetType)
+        public static string NavigationSingleWrongClrType([CanBeNull] object navigation, [CanBeNull] object entityType, [CanBeNull] object clrType, [CanBeNull] object targetType)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("WrongClrSingleNavigationType", "navigation", "entityType", "clrType", "targetType"), navigation, entityType, clrType, targetType);
+            return string.Format(CultureInfo.CurrentCulture, GetString("NavigationSingleWrongClrType", "navigation", "entityType", "clrType", "targetType"), navigation, entityType, clrType, targetType);
         }
 
         /// <summary>
         /// The collection navigation property '{navigation}' cannot be added to entity type '{entityType}' because its CLR type '{clrType}' does not implement 'IEnumerable&lt;{targetType}&gt;'. Collection navigation properties must implement IEnumerable&lt;&gt; of the related entity.
         /// </summary>
-        public static string WrongClrCollectionNavigationType([CanBeNull] object navigation, [CanBeNull] object entityType, [CanBeNull] object clrType, [CanBeNull] object targetType)
+        public static string NavigationCollectionWrongClrType([CanBeNull] object navigation, [CanBeNull] object entityType, [CanBeNull] object clrType, [CanBeNull] object targetType)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("WrongClrCollectionNavigationType", "navigation", "entityType", "clrType", "targetType"), navigation, entityType, clrType, targetType);
+            return string.Format(CultureInfo.CurrentCulture, GetString("NavigationCollectionWrongClrType", "navigation", "entityType", "clrType", "targetType"), navigation, entityType, clrType, targetType);
         }
 
         /// <summary>
@@ -733,7 +733,7 @@ namespace Microsoft.Data.Entity.Internal
         }
 
         /// <summary>
-        /// The property '{property}' on entity type '{entityType}' could not be added because it has been explicitly ignored.
+        /// The property '{property}' cannot be added to entity type '{entityType}' because it has been explicitly ignored.
         /// </summary>
         public static string PropertyIgnoredExplicitly([CanBeNull] object property, [CanBeNull] object entityType)
         {
@@ -770,6 +770,30 @@ namespace Microsoft.Data.Entity.Internal
         public static string ArgumentPropertyNull([CanBeNull] object property, [CanBeNull] object argument)
         {
             return string.Format(CultureInfo.CurrentCulture, GetString("ArgumentPropertyNull", "property", "argument"), property, argument);
+        }
+
+        /// <summary>
+        /// The navigation property '{navigation}' cannot be added to entity type '{entityType}' because it has been explicitly ignored.
+        /// </summary>
+        public static string NavigationIgnoredExplicitly([CanBeNull] object navigation, [CanBeNull] object entityType)
+        {
+            return string.Format(CultureInfo.CurrentCulture, GetString("NavigationIgnoredExplicitly", "navigation", "entityType"), navigation, entityType);
+        }
+
+        /// <summary>
+        /// The principal and dependent ends of the relationship cannot be flipped once foreign key or referenced key properties have been specified.
+        /// </summary>
+        public static string RelationshipCannotBeInverted
+        {
+            get { return GetString("RelationshipCannotBeInverted"); }
+        }
+
+        /// <summary>
+        /// The navigation property '{navigation}' on entity type '{entityType}' could not be ignored because it has been explicitly added.
+        /// </summary>
+        public static string NavigationAddedExplicitly([CanBeNull] object navigation, [CanBeNull] object entityType)
+        {
+            return string.Format(CultureInfo.CurrentCulture, GetString("NavigationAddedExplicitly", "navigation", "entityType"), navigation, entityType);
         }
 
         private static string GetString(string name, params string[] formatterNames)
